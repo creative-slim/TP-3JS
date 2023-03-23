@@ -3,34 +3,25 @@ import {
     MeshReflectorMaterial,
     PivotControls,
     OrbitControls,
-    TransformControls,
-    Environment, Lightformer, SpotLight,
-    Stars, CubeCamera, useGLTF, useDepthBuffer, useCursor, Instance, PointMaterial, CameraShake, CameraControls, PerspectiveCamera
+    SpotLight,
+    CubeCamera, useGLTF, useDepthBuffer, Instance, CameraControls
 } from "@react-three/drei"
 import { Leva, useControls } from "leva"
 import { Perf } from "r3f-perf"
-import { useRef, forwardRef, useState } from "react"
-import HQ from "./hq_cube"
+import { useRef, useState } from "react"
 import Pig from "./pig"
 import { MyEffects } from './Effects'
-import { MeshBasicMaterial, MeshPhongMaterial, TetrahedronGeometry, Vector3 } from 'three'
+import { Vector3 } from 'three'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import gsap from "gsap";
 
 import * as THREE from 'three'
 
-import texture from "../public/hdri.webp"
 import Myplane from "./myplane"
 import C from "./c"
-import HQfinal from "../hq_final"
-import Planet from "./planet"
-import HQmain from "./hq_v10"
 
-import giftBox, { Logo } from "./misc"
-import { GiftBox, BoxGear, Cell } from "./misc"
-import Scene from "./camCont"
-import HQ13 from "./hq_v13"
-import HQ14 from "./hq_v14"
+import { GiftBox, Logo } from "./misc"
+
 import HQ15 from "./hq_v15"
 export default function Experience() {
 
