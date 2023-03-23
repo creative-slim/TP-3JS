@@ -8,7 +8,7 @@ import { Bloom, EffectComposer, SSR } from "@react-three/postprocessing"
 import { Leva, useControls } from "leva"
 import * as THREE from "three";
 
-import { Vector3 } from 'three'
+import { MathUtils, Vector3 } from 'three'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 
 export default function HQ3(props) {
@@ -21,7 +21,19 @@ export default function HQ3(props) {
         attenuation: 19,
         anglePower: 7,
         intensity: 2,
+        color: "white"
     }
+
+    const innerSPOT = useControls({
+        penumbra: 0,
+        angle: 5,
+        distance: 70,
+        attenuation: 15,
+        anglePower: 7,
+        intensity: 2,
+        color: "white"
+    })
+
 
     const reflectionPlanes = {
         blur: [1000, 1000],
@@ -32,6 +44,7 @@ export default function HQ3(props) {
         depthScale: 1.2,
         color: "#1E2F45",
         metalness: 0.8,
+
     }
 
     const lightsSpin = useRef()
@@ -41,6 +54,9 @@ export default function HQ3(props) {
     materials["main-metal-reflective"].metalness = 0.8
     materials["main-metal-reflective"].reflectivness = 0
     materials["main-metal-reflective"].color = new THREE.Color(0x1E2F45);
+
+
+
     function MovingSpot({ vec = new Vector3(), ...props }) {
         const light = useRef()
         const viewport = useThree((state) => state.viewport)
@@ -52,10 +68,13 @@ export default function HQ3(props) {
     }
 
     useFrame((state, delta) => {
+        state.camera.position
         const angle = state.clock.elapsedTime
-        const multi = 0.1
-        lightsSpin.current.position.x = Math.sin(angle) * delta
-        lightsSpin.current.position.z = Math.cos(angle) * delta
+        console.log(state.camera.position)
+        const multi = 0.4
+        lightsSpin.current.position.x = Math.sin(angle * multi)
+        lightsSpin.current.position.z = Math.cos(angle * multi)
+
         lightsSpin.current.lookAt(0, 0, 0)
         // ...
     })
@@ -64,23 +83,31 @@ export default function HQ3(props) {
 
     return (<>
 
-        <group {...props} dispose={null}>
-            <MovingSpot color="#white" position={[10, 13.3, 4]} {...propsSPOT} />
-            <MovingSpot color="#white" position={[-10, 13.3, -4]}  {...propsSPOT} />
+        <group  {...props} dispose={null}>
+            <MovingSpot color="white" position={[10, 13.3, 4]} castShadow {...innerSPOT} />
+            <MovingSpot color="white" position={[-10, 13.3, -4]} castShadow  {...innerSPOT} />
 
             <group ref={lightsSpin}
             >
                 <SpotLight
                     castShadow
                     {...propsSPOT}
-                    position={[25, 13.3, 0]}
-                    color={"white"}
+                    position={[25, 13, 0]}
                 />
                 <SpotLight
                     castShadow
                     {...propsSPOT}
-                    position={[-25, 13.3, -10]}
-                    color={"white"}
+                    position={[-25, 13, 0]}
+                />
+                <SpotLight
+                    castShadow
+                    {...propsSPOT}
+                    position={[0, 13, 25]}
+                />
+                <SpotLight
+                    castShadow
+                    {...propsSPOT}
+                    position={[0, 13, -25]}
                 />
             </group>
             <SpotLight
@@ -99,7 +126,7 @@ export default function HQ3(props) {
                 penumbra={1}
                 decay={2}
 
-                color="#00ff"
+                color="#0000ff"
                 position={[0, 17.16, 0]}
                 rotation={[-Math.PI / 2, 0, 0]}
             />

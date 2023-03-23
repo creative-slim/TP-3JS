@@ -6,32 +6,28 @@ import React, { useRef } from "react";
 import { MeshReflectorMaterial, useGLTF } from "@react-three/drei";
 
 export default function Myplane(props) {
-    const { nodes, materials } = useGLTF("./testing_plane.glb");
+
+    const reflectionPlanes = {
+        blur: [1000, 1000],
+        resolution: 1024 * 2,
+        mixBlur: 1,
+        mixStrength: 50,
+        roughness: 0.2,
+        depthScale: 1.2,
+        color: "#1E2F45",
+        metalness: 0.8,
+
+    }
+
     return (
         <group {...props} dispose={null}>
-            {/* <mesh
+
+            <mesh scale={100}
+                position-y={-0.12}
                 castShadow
                 receiveShadow
-                geometry={nodes.Plane.geometry}
-                scale={[11.5, 9.26, 11.14]}
-            >
-                <MeshReflectorMaterial
-                    blur={[300, 100]}
-                    resolution={2048}
-                    mixBlur={1}
-                    mixStrength={50}
-                    roughness={1}
-                    depthScale={1.2}
-                    minDepthThreshold={0.4}
-                    maxDepthThreshold={1.4}
-                    color="#050505"
-                    metalness={0.5}
-                />
-            </mesh> */}
-            <mesh scale={[11.5, 9.26, 11.14]}
-                castShadow
-                receiveShadow
-                rotation-x={11}
+                rotation-x={-Math.PI / 2}
+
             >
                 <planeGeometry />
                 <MeshReflectorMaterial
@@ -39,12 +35,14 @@ export default function Myplane(props) {
                     resolution={2048}
                     mixBlur={1}
                     mixStrength={50}
-                    roughness={1}
+                    roughness={0.3}
                     depthScale={1.2}
                     minDepthThreshold={0.4}
                     maxDepthThreshold={1.4}
                     color="#050505"
-                    metalness={0.5}
+                    metalness={0.9}
+
+
                 />
             </mesh>
 
@@ -53,4 +51,4 @@ export default function Myplane(props) {
     );
 }
 
-useGLTF.preload("./testing_plane.glb");
+ // color="#050505"
