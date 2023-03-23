@@ -45,7 +45,11 @@ root.render(
                 {/* <PerformanceMonitor /> */}
                 {/* <AdaptiveDpr pixelated /> */}
                 {/* <axesHelper args={[20, 20, 20]} /> */}
-                <Experience />
+                {/* <Experience /> */}
+                <mesh>
+                    <boxGeometry />
+                    <meshBasicMaterial />
+                </mesh>
                 {/* <ambientLight intensity={2} /> */}
             </Suspense>
         </Canvas>
